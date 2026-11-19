@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block content %}
+<section class="section"><div class="container product-detail">
+<div class="detail-image">{% if product.image %}<img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="{{ product.name }}">{% else %}<span>FUBS</span>{% endif %}</div>
+<div><span class="eyebrow">{{ product.category }}</span><h1>{{ product.name }}</h1><p class="price">{{ product.price or 'Contact for pricing' }}</p><p>{{ product.description }}</p><p class="muted">Availability and final pricing are confirmed when your enquiry is reviewed.</p><a class="btn btn-primary" href="{{ url_for('contact', subject=product.name) }}">Enquire about this item →</a><p><a class="text-link" href="{{ url_for('merchandise') }}">← Back to catalogue</a></p></div>
+</div></section>
+{% endblock %}

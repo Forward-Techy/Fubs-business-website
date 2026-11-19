@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<section class="admin-page"><div class="container"><div class="admin-heading"><div><span class="eyebrow">FUBS BACK OFFICE</span><h1>Management dashboard</h1><p class="muted">Signed in as {{ session.get('admin_username') }}</p></div><a class="btn btn-outline-dark" href="{{ url_for('admin_logout') }}">Sign out</a></div>
+<div class="dashboard-stats"><div><small>Total products</small><b>{{ total_products }}</b></div><div><small>Total enquiries</small><b>{{ total_enquiries }}</b></div></div>
+<div class="admin-section-head"><h2>Product catalogue</h2><a class="btn btn-primary" href="{{ url_for('add_product') }}">＋ Add product</a></div>
+<div class="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price / note</th><th>Featured</th><th>Visible</th><th>Actions</th></tr></thead><tbody>
+{% for p in products %}<tr><td><div class="table-product">{% if p.image %}<img src="{{ url_for('static', filename='uploads/' + p.image) }}" alt="">{% else %}<span>F</span>{% endif %}<b>{{ p.name }}</b></div></td><td>{{ p.category }}</td><td>{{ p.price or 'Contact' }}</td><td>{{ 'Yes' if p.featured else 'No' }}</td><td>{{ 'Yes' if p.active else 'No' }}</td><td class="actions"><a href="{{ url_for('edit_product', product_id=p.id) }}">Edit</a><form method="post" action="{{ url_for('delete_product', product_id=p.id) }}" data-confirm="Delete this product permanently?"><button class="link-danger" type="submit">Delete</button></form></td></tr>{% else %}<tr><td colspan="6">No products have been added.</td></tr>{% endfor %}
+</tbody></table></div>
+<div class="admin-section-head"><h2>Recent customer enquiries</h2></div>
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Contact</th><th>Subject / message</th><th>Status</th><th>Update</th></tr></thead><tbody>
+{% for e in enquiries %}<tr><td>{{ e.created_at }}</td><td>{{ e.name }}</td><td><a href="mailto:{{ e.email }}">{{ e.email }}</a><br>{{ e.phone }}</td><td><b>{{ e.subject }}</b><br>{{ e.message }}</td><td>{{ e.status }}</td><td><form method="post" action="{{ url_for('update_enquiry', enquiry_id=e.id) }}"><select name="status"><option {% if e.status=='New' %}selected{% endif %}>New</option><option {% if e.status=='In progress' %}selected{% endif %}>In progress</option><option {% if e.status=='Closed' %}selected{% endif %}>Closed</option></select><button class="small-btn" type="submit">Save</button></form></td></tr>{% else %}<tr><td colspan="6">No enquiries yet.</td></tr>{% endfor %}
+</tbody></table></div>
+</div></section>
+{% endblock %}

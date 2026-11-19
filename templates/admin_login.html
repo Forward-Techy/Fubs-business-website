@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block content %}
+<section class="admin-auth"><form class="form-card auth-card" method="post"><span class="eyebrow">FUBS MANAGEMENT</span><h1>Administrator login</h1><p class="muted">Sign in to manage catalogue products and customer enquiries.</p><label>Username<input name="username" required autocomplete="username"></label><label>Password<input type="password" name="password" required autocomplete="current-password"></label><button class="btn btn-primary full" type="submit">Sign in securely</button><a class="text-link" href="{{ url_for('home') }}">← Return to website</a></form></section>
+{% endblock %}

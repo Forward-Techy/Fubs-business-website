@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block content %}
+<section class="admin-page"><div class="container form-narrow"><a class="text-link" href="{{ url_for('admin_dashboard') }}">← Back to dashboard</a><form class="form-card" method="post" enctype="multipart/form-data"><span class="eyebrow">CATALOGUE MANAGEMENT</span><h1>{{ 'Edit product' if product else 'Add a product' }}</h1>
+<label>Product name<input name="name" required value="{{ product.name if product else '' }}"></label>
+<label>Category<input name="category" required list="categories" value="{{ product.category if product else '' }}" placeholder="e.g. Electronics, Rentals, Office Supplies"><datalist id="categories"><option>Electronics</option><option>Office Supplies</option><option>Rentals</option><option>Household</option><option>Building Materials</option></datalist></label>
+<label>Price or price note<input name="price" value="{{ product.price if product else '' }}" placeholder="e.g. ₦25,000 or Request a quote"></label>
+<label>Description<textarea name="description" rows="5">{{ product.description if product else '' }}</textarea></label>
+<label>Product image <input type="file" name="image" accept=".png,.jpg,.jpeg,.webp,.gif" data-image-input></label>
+<div class="image-preview" data-image-preview>{% if product and product.image %}<img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="Current product image">{% else %}<span>Image preview will appear here</span>{% endif %}</div>
+<label class="check-label"><input type="checkbox" name="featured" {% if product and product.featured %}checked{% endif %}> Show as a featured product</label>
+{% if product %}<label class="check-label"><input type="checkbox" name="active" {% if product.active %}checked{% endif %}> Visible in public catalogue</label>{% endif %}
+<button class="btn btn-primary full" type="submit">{{ 'Save changes' if product else 'Add product' }}</button></form></div></section>
+{% endblock %}
